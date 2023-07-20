@@ -1,0 +1,87 @@
+/*Setting up some basic box sizing */
+*, *::after, *::before{
+    box-sizing: border-box;
+}
+
+:root {
+    /*This is like creating variables*/
+    --cell-size: 100px;
+    /*This will define how big our X and O is going to be*/
+    --mark-size: calc(var(--cell-size) * 0.9);
+}
+
+/*At first the restart button is not exactly at the corner but
+  we set margin to 0. Now the button is exactly at the corner.
+  This  will make it easier for us to place other elements in
+  later*/
+body{
+    margin: 0;
+}
+
+.board{
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    /*This will make sure that the X or O will center inside the box.*/
+    justify-items: center;
+    /*This will align the actual indivdual things inside the cell not the actual cell*/
+    align-items: center;
+    /*This arrange the board to have 3 cells in each row*/
+    grid-template-columns: repeat(3,auto);
+}
+
+.cell{
+    width: var(--cell-size);
+    height: var(--cell-size);
+    /*background-color: black;   (This change the color of the box background)*/
+    /*This give the board a border*/
+    border: 1px solid black;
+    /*Without flex, it is not displaying the content of it very well*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/*This will remove the first roll top border*/
+/*or we can do it this way :
+.cell:nth-child(n+1){
+    border-top: none;
+}
+*/
+.cell:first-child,
+.cell:nth-child(2),
+.cell:nth-child(3){
+    border-top: none;
+}
+
+/*This will remove the left line of border*/
+.cell:nth-child(3n+1) {
+    border-left: none;
+}
+
+.cell:nth-child(3n+3){
+    border-right: none;
+}
+
+/* or you can do it this why
+.cell:last-child,
+.cell:nth-child(8),
+.cell:nth-child(7){
+    border-bottom: none;
+}
+*/
+.cell:nth-child(n+7){
+    border-bottom: none;
+}
+
+/*We are going to create X shape with plain CSS*/
+.cell.x::before,
+.cell.x::after{
+    content: '';
+    width: calc(var(--mark-size)* 0.15);
+    height: var(--mark-size);
+    background-color:black;
+}
