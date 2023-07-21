@@ -18,7 +18,7 @@
         <!-- If we do '.cell*9' it will generate 9 lines of code-->
         <!-- We add 'data-cell' because it be be easier to accesss the infomation in JavaScript w/out using the class cell-->
         <!-- since we are using the class cell for CSS -->
-        <div class="cell x" data-cell></div>
+        <div class="cell" data-cell></div>
         <div class="cell" data-cell></div>
         <div class="cell" data-cell></div>
         <div class="cell" data-cell></div>
@@ -29,9 +29,9 @@
         <div class="cell" data-cell></div>
     </div>
     <!-- This will be the message popping up at the end-->
-    <div class="winning-message">
+    <div class="winning-message" id = "winningMessage">
         <!-- This will be the text above the restart button saying who is the winner or it is draw-->
-        <div data-winning-message-text id = "winningMessage"></div>
+        <div data-winning-message-text></div>
         <!-- This is the restart button to start the game again-->
         <button id = "restartButton">Restart</button>
     </div>

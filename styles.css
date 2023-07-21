@@ -42,6 +42,10 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+    /*This cursor is added to so that when our mouse is on occupied cell it will show that that space is taken*/
+    /*or it will interact with the user depending the status of each cell*/
+    cursor: pointer;
 }
 
 
@@ -77,11 +81,110 @@ body{
     border-bottom: none;
 }
 
+/*If the pointer is on occupied space, the the pointer will change to not-allowed*/
+.cell.x,
+.cell.circle{
+    cursor: not-allowed;
+}
+
+/*We add the background color here to overwrite the code properly*/
+.cell.x::before,
+.cell.x::after,
+.cell.circle::before{
+    background-color: black;
+}
+
+/*When it is X turn, the cell will be hover wherever the mouse land on */
+.board.x .cell:not(.x):not(.circle):hover::before,
+.board.x .cell:not(.x):not(.circle):hover::after,
+.board.circle .cell:not(.x):not(.circle):hover::before{
+    background-color: lightgrey;
+}
+
 /*We are going to create X shape with plain CSS*/
 .cell.x::before,
-.cell.x::after{
+.cell.x::after,
+/*This mean that the hover effect will work only when there is no X or O in that cell*/
+/*This is checking the condition*/
+.board.x .cell:not(.x):not(.circle):hover::before,
+.board.x .cell:not(.x):not(.circle):hover::after{
     content: '';
+    /*Without setting absolute, the line will be offset because they are displayed next to each other in the document flow because there is static*/
+    /*We have to position heave absolute so they have the same base and don't overlap each other*/
+    position: absolute;
     width: calc(var(--mark-size)* 0.15);
     height: var(--mark-size);
-    background-color:black;
+}
+
+.cell.x::before,
+.board.x .cell:not(.x):not(.circle):hover::before{
+    transform: rotate(45deg);
+}
+
+.cell.x::after,
+.board.x .cell:not(.x):not(.circle):hover::after{
+    transform: rotate(-45deg);
+}
+
+
+.cell.circle::before,
+.cell.circle::after,
+/*When we are on the board that have circle class, we will get the cell inside that is not X or O ...*/
+.board.circle .cell:not(.x):not(.circle):hover::before,
+.board.circle .cell:not(.x):not(.circle):hover::after{
+    content: '';
+    position: absolute;
+    /*This make the shape circle*/
+    border-radius: 50%;
+}
+
+/*This one will be the larger circle that will be behind the small circle*/
+.cell.circle::before,
+.board.circle .cell:not(.x):not(.circle):hover::before{
+    width:var(--mark-size);
+    height: var(--mark-size);
+}
+
+/*This is the small circle*/
+.cell.circle::after,
+.board.circle .cell:not(.x):not(.circle):hover::after{
+    width:calc(var(--mark-size) * 0.7);
+    height: calc(var(--mark-size) * 0.7);
+    background: white;
+}
+
+/*This is the restart button*/
+.winning-message{
+    display: none;
+    /*We want the position of the button to be in the center and always take up every space */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /*rgba(red, green, blue, transparency)*/
+    background-color: rgba(0, 0, 0, 0.9);
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 5rem;
+    flex-direction: column;
+}
+
+.winning-message button{
+    font-size: 3rem;
+    background-color: white;
+    border: 1px solid black;
+    padding: 0.25em 0.5em;
+    cursor: pointer;
+}
+
+.winning-message button:hover{
+    background-color: black;
+    color: white;
+    border-color: white; 
+}
+
+.winning-message.show{
+    display: flex;
 }
